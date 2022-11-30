@@ -46,7 +46,6 @@ public class DemoPpcApplication {
 		return html;
 	}
 
-	// creating post mapping that post the student detail in the database
 	@GetMapping("/studentadd")
 	public String saveStudent(@RequestParam(value = "name", defaultValue="Humberto") String name) {
 		Student s = new Student();
@@ -57,8 +56,6 @@ public class DemoPpcApplication {
 		return "<h1>ESTUDIANTE " +s.getName()+" AÑADIDO</h1>";
 	}
 
-	// creating a get mapping that retrieves all the students detail from the
-	// database
 	@GetMapping("/students")
 	private String getAllStudent() {
 		StringBuilder sb = new StringBuilder("<h1>Alumnos añadidos</h1>");
