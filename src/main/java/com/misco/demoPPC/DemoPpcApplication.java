@@ -1,6 +1,6 @@
 package com.misco.demoPPC;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -24,11 +24,16 @@ public class DemoPpcApplication {
 
 	@GetMapping("/hello")
 	public String hello() {
-		String html = String.format("Pincha en el boton para una SORPRESA");
+		String html = new String();
+		html += "<br>Disponible en 172.22.21.195/hello</br>";
+		html += "<br>Pincha en el boton para una SORPRESA</br>";
 		html += " <form action=\"/sorpresa\"><p> <input type=\"text\" name=\"nombre\" placeholder=\"Pon tu nombre\" /></p>";
 		html += " <input type=\"submit\" value=\"PINCHA\" /></form>";
+		html += "Introduce el nombre de los alumnos";
 		html += " <form action=\"/studentadd\"><p> <input type=\"text\" name=\"name\" placeholder=\"Nombre de estudiante a añadir\" /></p>";
 		html += " <input type=\"submit\" value=\"Añadir\" /></form>";
+		html += " <form action=\"/students\">";
+		html += " <input type=\"submit\" value=\"Ver DB\" /></form>";
 
 		return html;
 	}
@@ -52,12 +57,14 @@ public class DemoPpcApplication {
 		return "<h1>ESTUDIANTE " +s.getName()+" AÑADIDO</h1>";
 	}
 
-	// // creating a get mapping that retrieves all the students detail from the
-	// // database
-	// @GetMapping("/students")
-	// private List<Student> getAllStudent() {
-	// 	return studentService.getAllStudent();
-	// }
+	// creating a get mapping that retrieves all the students detail from the
+	// database
+	@GetMapping("/students")
+	private String getAllStudent() {
+		StringBuilder sb = new StringBuilder("<h1>Alumnos añadidos</h1>");
+		studentService.getAllStudent().stream().forEach(s -> sb.append("<br>"+s.getName()+"</br>"));
+		return sb.toString();
+	}
 
 	// // creating a get mapping that retrieves the detail of a specific student
 	// @GetMapping("/student/{id}")
